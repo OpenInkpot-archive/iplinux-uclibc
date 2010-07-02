@@ -1,0 +1,77 @@
+#! /usr/bin/make -f
+# Copyright 2010 Evan Kroske <e.kroske@gmail.com>
+# This Makefile is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+STAGE := __STAGE__
+
+DEB_HOST_ARCH         ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_GNU_CPU      ?= $(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
+DEB_HOST_GNU_TYPE     ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_HOST_GNU_SYSTEM   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_SYSTEM)
+DEB_HOST_ARCH_OS      ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+DEB_BUILD_ARCH        ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+DEB_BUILD_GNU_CPU     ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_CPU)
+DEB_BUILD_GNU_TYPE    ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_BUILD_GNU_SYSTEM  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_SYSTEM)
+
+PACKAGES :=
+BUILD_TARGETS := 
+INSTALL_TARGETS :=
+
+ifeq ($(STAGE),dev-headers)
+	PACKAGES := uclibc-dev-headers
+	BUILD_TARGETS := headers
+	INSTALL_TARGETS := install_headers
+	CROSS_COMPILER_PREFIX := 
+endif
+
+ifeq ($(STAGE),bootstrap)
+	PACKAGES := uclibc0 uclibc-dev
+	BUILD_TARGETS := all
+	INSTALL_TARGETS := install_runtime install_dev
+	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
+endif
+
+ifeq ($(STAGE),final)
+	PACKAGES := not implemented
+	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
+endif
+
+ifeq ($(PACKAGES),)
+	$(error No packages)
+endif
+
+ifeq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
+	$(error Cross-compiles only)
+endif
+
+configure: configure-stamp
+configure-stamp:
+	cp debian/$(DEB_HOST_GNU_CPU).config .config
+	touch configure-stamp
+
+build: build-stamp
+build-stamp: configure-stamp
+	$(MAKE) CROSS=$(CROSS_COMPILER_PREFIX) $(BUILD_TARGETS)
+	touch build-stamp
+
+clean: 
+	rm -rf debian/tmp
+	rm -f build-stamp configure-stamp .config debian/files
+	$(MAKE) distclean
+
+install: build
+	./debian/deb-install "$(MAKE) CROSS=$(CROSS_COMPILER_PREFIX)" "$(PACKAGES)" "$(INSTALL_TARGETS)"
+
+binary-indep: build install
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	./debian/deb-package "$(PACKAGES)"
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
+

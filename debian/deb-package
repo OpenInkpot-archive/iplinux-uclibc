@@ -1,0 +1,10 @@
+#! /bin/bash
+
+packages=$1
+
+for package in $packages; do
+    package_fs="debian/tmp/$package"
+    mkdir "$package_fs/DEBIAN"
+    dpkg-gencontrol -p"$package" -P"$package_fs"
+    dpkg-deb -b "$package_fs" ..
+done

@@ -1,0 +1,6 @@
+uclibc (0.9.31-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Evan Kroske <e.kroske@gmail.com>  Sat, 26 Jun 2010 15:36:01 +0000
+

@@ -1,0 +1,26 @@
+Source: uclibc
+Priority: optional
+Maintainer: Evan Kroske <e.kroske@gmail.com>
+Build-Depends: __UCLIBC_BUILD_DEPENDS__
+Standards-Version: 3.7.3
+Section: libs
+Homepage: http://uclibc.org/
+
+Package: uclibc-dev
+Section: libdevel
+Architecture: any
+Depends: uclibc (= ${binary:Version})
+Conflicts: uclibc-dev-headers-__TARGET__-cross
+Replaces: uclibc-dev-headers-__TARGET__-cross
+Description: Another part of uClibc
+
+Package: uclibc0
+Section: libs
+Architecture: any
+Provides: __UCLIBC_PROVIDES__
+Description: Featherweight C library for embedded systems
+
+Package: uclibc-dev-headers
+Section: libdevel
+Architecture: any
+Description: Dev headers for bootstrapping GCC

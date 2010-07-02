@@ -1,0 +1,19 @@
+#! /bin/bash
+
+make_command="$1"
+packages=($2)
+targets=($3)
+
+if (( ${#packages[@]} != ${#targets[@]} )); then
+    echo "The number of packages and targets must be equal" >&2
+    exit 1
+fi
+
+max_index=`expr ${#packages[@]} - 1`
+for index in `seq 0 $max_index`; do
+    package="${packages[$index]}"
+    target="${targets[$index]}"
+    package_fs="debian/tmp/$package"
+    mkdir -p "$package_fs"
+    $make_command DESTDIR="$package_fs" "$target"
+done

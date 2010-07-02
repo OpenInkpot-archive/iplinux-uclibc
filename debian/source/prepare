@@ -1,0 +1,41 @@
+#!/bin/sh
+
+if [ $# -ne 2 ]; then
+    echo "Usage: debian/source/prepare <arch> <mode>"
+    echo
+    echo "  <mode> = dev-headers | bootstrap | final"
+    exit 1
+fi
+
+TARGET=$1
+MODE=$2
+
+case $MODE in
+    dev-headers)
+        STAGE=dev-headers
+        ;;
+    bootstrap)
+        UCLIBC_PROVIDES=uclibc-bootstrap
+        UCLIBC_BUILD_DEPENDS=", gcc-bootstrap-toolchain-$TARGET-cross"
+        STAGE=bootstrap
+        ;;
+    final)
+        UCLIBC_BUILD_DEPENDS=", gcc-toolchain-$TARGET-cross"
+        STAGE=final
+        ;;
+    *)
+        echo "Unknown mode: $MODE"
+        exit 1
+        ;;
+esac
+
+rm debian/control debian/rules
+
+sed -e "s/__UCLIBC_PROVIDES__/${UCLIBC_PROVIDES}/g" \
+    -e "s/__UCLIBC_BUILD_DEPENDS__/${UCLIBC_BUILD_DEPENDS}/g" \
+    -e "s/__TARGET__/${TARGET}/g" \
+    < debian/control.in > debian/control
+
+sed -e "s/__STAGE__/${STAGE}/g" \
+    < debian/rules.in > debian/rules
+
