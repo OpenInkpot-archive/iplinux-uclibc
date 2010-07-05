@@ -9,9 +9,7 @@ Homepage: http://uclibc.org/
 Package: uclibc-dev
 Section: libdevel
 Architecture: any
-Depends: uclibc (= ${binary:Version})
-Conflicts: uclibc-dev-headers-__TARGET__-cross
-Replaces: uclibc-dev-headers-__TARGET__-cross
+Depends: uclibc0 (= ${binary:Version})
 Description: Another part of uClibc
 
 Package: uclibc0
