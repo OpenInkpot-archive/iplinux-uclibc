@@ -6,18 +6,12 @@ Standards-Version: 3.7.3
 Section: libs
 Homepage: http://uclibc.org/
 
-Package: uclibc-dev
-Section: libdevel
-Architecture: any
-Depends: uclibc (= ${binary:Version})
-Conflicts: uclibc-dev-headers-__TARGET__-cross
-Replaces: uclibc-dev-headers-__TARGET__-cross
-Description: Another part of uClibc
-
 Package: uclibc0
 Section: libs
 Architecture: any
 Provides: __UCLIBC_PROVIDES__
+Conflicts: uclibc-dev-headers-__TARGET__-cross
+Replaces: uclibc-dev-headers-__TARGET__-cross
 Description: Featherweight C library for embedded systems
 
 Package: uclibc-dev-headers

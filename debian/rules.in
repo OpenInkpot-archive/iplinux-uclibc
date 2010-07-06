@@ -29,9 +29,9 @@ ifeq ($(STAGE),dev-headers)
 endif
 
 ifeq ($(STAGE),bootstrap)
-	PACKAGES := uclibc0 uclibc-dev
+	PACKAGES := uclibc0
 	BUILD_TARGETS := all
-	INSTALL_TARGETS := install_runtime install_dev
+	INSTALL_TARGETS := install_dev
 	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
 endif
 
@@ -64,13 +64,14 @@ clean:
 	$(MAKE) distclean
 
 install: build
-	./debian/deb-install "$(MAKE) CROSS=$(CROSS_COMPILER_PREFIX)" "$(PACKAGES)" "$(INSTALL_TARGETS)"
+	debian/deb-install "$(MAKE) CROSS=$(CROSS_COMPILER_PREFIX)" "$(PACKAGES)" "$(INSTALL_TARGETS)"
 
 binary-indep: build install
 
 # Build architecture-dependent files here.
 binary-arch: build install
-	./debian/deb-package "$(PACKAGES)"
+	debian/deb-package "$(PACKAGES)"
+	debian/deb-gensymbols "$(PACKAGES)"
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
