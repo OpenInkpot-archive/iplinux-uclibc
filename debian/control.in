@@ -9,6 +9,7 @@ Homepage: http://uclibc.org/
 Package: uclibc0
 Section: libs
 Architecture: any
+Depends: ${shlibs:Depends}
 Provides: __UCLIBC_PROVIDES__
 Conflicts: uclibc-dev-headers-__TARGET__-cross
 Replaces: uclibc-dev-headers-__TARGET__-cross

@@ -70,8 +70,8 @@ binary-indep: build install
 
 # Build architecture-dependent files here.
 binary-arch: build install
-	debian/deb-package "$(PACKAGES)"
 	debian/deb-gensymbols "$(PACKAGES)"
+	debian/deb-package "$(PACKAGES)"
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
