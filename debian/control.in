@@ -2,6 +2,7 @@ Source: uclibc
 Priority: optional
 Maintainer: Evan Kroske <e.kroske@gmail.com>
 Build-Depends: __UCLIBC_BUILD_DEPENDS__
+XCS-Needs-Cross-Toolchain: no
 Standards-Version: 3.7.3
 Section: libs
 Homepage: http://uclibc.org/
@@ -9,13 +10,12 @@ Homepage: http://uclibc.org/
 Package: uclibc0
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}
 Provides: __UCLIBC_PROVIDES__
-Conflicts: uclibc-dev-headers-__TARGET__-cross
-Replaces: uclibc-dev-headers-__TARGET__-cross
+Conflicts: uclibc0-dev-headers-__TARGET__-cross
+Replaces: uclibc0-dev-headers-__TARGET__-cross
 Description: Featherweight C library for embedded systems
 
-Package: uclibc-dev-headers
+Package: uclibc0-dev-headers
 Section: libdevel
 Architecture: any
 Description: Dev headers for bootstrapping GCC

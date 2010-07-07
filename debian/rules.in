@@ -22,7 +22,7 @@ BUILD_TARGETS :=
 INSTALL_TARGETS :=
 
 ifeq ($(STAGE),dev-headers)
-	PACKAGES := uclibc-dev-headers
+	PACKAGES := uclibc0-dev-headers
 	BUILD_TARGETS := headers
 	INSTALL_TARGETS := install_headers
 	CROSS_COMPILER_PREFIX := 
