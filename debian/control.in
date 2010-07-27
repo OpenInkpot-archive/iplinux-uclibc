@@ -15,15 +15,15 @@ Architecture: any
 Provides: __UCLIBC_PROVIDES__
 Conflicts: uclibc0-dev-headers-__TARGET__-cross
 Replaces: uclibc0-dev-headers-__TARGET__-cross
-Description: Featherweight C library for embedded systems
+Description: Shared object files for uClibc
 
 Package: uclibc0-dev-headers
 Section: libdevel
 Architecture: any
-Description: Dev headers for bootstrapping GCC
+Description: Headers for bootstrapping GCC
 
 Package: uclibc-dev
 Section: libdevel
 Architecture: any
 Depends: uclibc0 (= ${binary:Version})
-Description: Another part of uClibc
+Description: Headers and static libraries for uClibc

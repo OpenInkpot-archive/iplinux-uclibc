@@ -24,15 +24,14 @@ ifeq ($(STAGE),dev-headers)
 endif
 
 ifeq ($(STAGE),bootstrap)
-	PACKAGES := uclibc0
+	PACKAGES := uclibc0 uclibc-dev
 	BUILD_TARGETS := all
-	INSTALL_TARGETS := install_dev
+	INSTALL_TARGETS := install_runtime install_dev
 	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
 endif
 
 ifeq ($(STAGE),final)
-	PACKAGES := not implemented
-	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
+	$(error Not implemented)
 endif
 
 ifeq ($(PACKAGES),)
@@ -55,7 +54,7 @@ build-stamp: configure-stamp
 
 clean: 
 	rm -rf debian/tmp
-	rm -f build-stamp configure-stamp .config debian/files
+	rm -f build-stamp configure-stamp debian/files
 	$(MAKE) distclean
 
 install: build
