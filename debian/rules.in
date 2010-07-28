@@ -12,21 +12,15 @@ DEB_HOST_ARCH_CPU ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_CPU)
 DEB_HOST_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PACKAGES :=
-BUILD_TARGETS := 
-INSTALL_TARGETS :=
-
 ifeq ($(STAGE),dev-headers)
 	PACKAGES := uclibc0-dev-headers
-	BUILD_TARGETS := headers
-	INSTALL_TARGETS := install_headers
+	BUILD_TARGETS := install_headers
 	CROSS_COMPILER_PREFIX := 
 endif
 
 ifeq ($(STAGE),bootstrap)
-	PACKAGES := uclibc0 uclibc-dev
-	BUILD_TARGETS := all
-	INSTALL_TARGETS := install_runtime install_dev
+	PACKAGES := uclibc0 uclibc0-dev
+	BUILD_TARGETS := install_dev
 	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
 endif
 
@@ -49,16 +43,15 @@ configure-stamp:
 
 build: build-stamp
 build-stamp: configure-stamp
-	$(MAKE) CROSS=$(CROSS_COMPILER_PREFIX) $(BUILD_TARGETS)
+	$(MAKE) DESTDIR=debian/tmp CROSS=$(CROSS_COMPILER_PREFIX) $(BUILD_TARGETS)
 	touch build-stamp
 
 clean: 
-	rm -rf debian/tmp
-	rm -f build-stamp configure-stamp debian/files
 	$(MAKE) distclean
+	dh_clean
 
 install: build
-	debian/deb-install "$(MAKE) CROSS=$(CROSS_COMPILER_PREFIX)" "$(PACKAGES)" "$(INSTALL_TARGETS)"
+	dh_install
 
 binary-indep: build install
 

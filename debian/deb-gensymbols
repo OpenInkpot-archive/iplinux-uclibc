@@ -3,5 +3,5 @@
 packages="$1"
 
 for package in $packages; do
-    dpkg-gensymbols -P"debian/tmp/$package" -p"$package"
+    dpkg-gensymbols -P"debian/$package" -p"$package"
 done
