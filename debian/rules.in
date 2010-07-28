@@ -36,6 +36,8 @@ ifeq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
 	$(error Cross-compiles only)
 endif
 
+DEBHELPER_ARGS := $(foreach package,$(PACKAGES),-p$(package) )
+
 configure: configure-stamp
 configure-stamp:
 	cp debian/$(DEB_HOST_ARCH_CPU).config .config
@@ -51,7 +53,7 @@ clean:
 	dh_clean
 
 install: build
-	dh_install
+	dh_install $(DEBHELPER_ARGS)
 
 binary-indep: build install
 
