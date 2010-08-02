@@ -31,3 +31,9 @@ Architecture: any
 Depends: uclibc0 (= ${binary:Version})
 Provides: libc-dev
 Description: Headers and static libraries for uClibc
+
+Package: uclibc0-utils
+Architecture: any
+Priority: optional
+Description: uClibc utilities
+ ldd, ldconfig, locale, iconv (for now)

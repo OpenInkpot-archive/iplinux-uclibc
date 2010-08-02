@@ -25,7 +25,9 @@ ifeq ($(STAGE),bootstrap)
 endif
 
 ifeq ($(STAGE),final)
-	$(error Not implemented)
+	PACKAGES := uclibc0-utils
+	BUILD_TARGETS := install_utils
+	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
 endif
 
 ifeq ($(PACKAGES),)
