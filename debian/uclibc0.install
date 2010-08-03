@@ -5,6 +5,7 @@ usr/lib/libdl-0.9.31.1-git.so
 usr/lib/librt-0.9.31.1-git.so
 usr/lib/libpthread-0.9.31.1-git.so
 usr/lib/libm-0.9.31.1-git.so
+usr/lib/libutil-0.9.31.1-git.so
 usr/lib/libc.so.0
 usr/lib/libcrypt.so.0
 usr/lib/libm.so.0
@@ -12,3 +13,4 @@ usr/lib/libpthread.so.0
 usr/lib/libdl.so.0
 usr/lib/ld-uClibc.so.0
 usr/lib/librt.so.0
+usr/lib/libutil.so.0

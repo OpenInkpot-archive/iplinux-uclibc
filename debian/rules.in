@@ -28,7 +28,7 @@ endif
 
 ifeq ($(STAGE),final)
 	PACKAGES := uclibc0-utils
-	BUILD_TARGETS := install_utils
+	BUILD_TARGETS := all install_utils
 	CROSS_COMPILER_PREFIX := $(DEB_HOST_GNU_TYPE)-
 endif
 

@@ -6,3 +6,4 @@ usr/lib/libpthread.so
 usr/lib/libcrypt.so
 usr/lib/libdl.so
 usr/lib/librt.so
+usr/lib/libutil.so
