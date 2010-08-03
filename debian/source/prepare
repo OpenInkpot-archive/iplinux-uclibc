@@ -29,7 +29,7 @@ case $MODE in
         ;;
 esac
 
-rm debian/control debian/rules
+rm -f debian/control debian/rules
 
 sed -e "s/__UCLIBC_PROVIDES__/${UCLIBC_PROVIDES}/g" \
     -e "s/__UCLIBC_BUILD_DEPENDS__/${UCLIBC_BUILD_DEPENDS}/g" \
