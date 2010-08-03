@@ -1,0 +1,3 @@
+usr/bin/iconv
+usr/bin/ldd
+usr/sbin/ldconfig
