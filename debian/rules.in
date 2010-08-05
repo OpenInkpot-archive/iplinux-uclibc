@@ -47,7 +47,7 @@ configure-stamp:
 	cp debian/$(DEB_HOST_ARCH_CPU).config .config
 	touch configure-stamp
 
-LOCALE_PATH=debian/tmp-locale
+LOCALE_PATH=debian/tmp/usr/lib/locale
 
 build: build-stamp
 build-stamp: configure-stamp
