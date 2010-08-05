@@ -47,9 +47,16 @@ configure-stamp:
 	cp debian/$(DEB_HOST_ARCH_CPU).config .config
 	touch configure-stamp
 
+LOCALE_PATH=debian/tmp-locale
+
 build: build-stamp
 build-stamp: configure-stamp
-	$(MAKE) DESTDIR=$(CWD)/debian/tmp CROSS=$(CROSS_COMPILER_PREFIX) $(BUILD_TARGETS)
+
+# extra/locale/gen_wc8bit needs UTF-8 locale during build.
+	mkdir -p $(LOCALE_PATH)
+	localedef -i en_US -f UTF-8 $(LOCALE_PATH)/en_US.UTF-8
+
+	LOCPATH=$(LOCALE_PATH) LC_ALL=en_US.UTF-8 $(MAKE) DESTDIR=$(CWD)/debian/tmp CROSS=$(CROSS_COMPILER_PREFIX) $(BUILD_TARGETS)
 	touch build-stamp
 
 clean: 
